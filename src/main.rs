@@ -9,13 +9,19 @@ use anyhow::Result;
 use serde_json::Value;
 
 fn main() -> Result<()> {
+    
+    let input_path = "data/test.jsonl";
+    let output_path = "output.json";
+    generate_json(input_path, output_path)?;
 
-    let values = get_values("data/test.jsonl")?;
+    Ok(())
+}
 
+fn generate_json(input_path: &str, output_path: &str) -> Result<(), anyhow::Error> {
+    let values = get_values(&input_path)?;
     let contents = serde_json::to_string(&values)?;
-    let mut file = File::create("foo.txt")?;
+    let mut file = File::create(&output_path)?;
     file.write(contents.as_bytes())?;
-
     Ok(())
 }
 
